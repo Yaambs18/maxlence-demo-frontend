@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import userService from '../../services/userService';
+import Button from '../UI/Button';
 
 import './UsersList.css';
 
@@ -10,31 +11,35 @@ const UsersListPage = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [pageSize] = useState(5);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [filterRole, setFilterRole] = useState('');
+  const searchNameRef = useRef('');
+  const searchEmailRef = useRef('');
+  const filterRoleRef = useRef('');
+
+  const fetchUsers = useCallback(async () => {
+    setLoading(true);
+    setError('');
+    try {
+      console.log(searchNameRef.current.value, searchEmailRef.current.value, filterRoleRef.current.value);
+      const data = await userService.getUsers(
+        page, pageSize, searchNameRef.current.value, searchEmailRef.current.value, filterRoleRef.current.value
+      );
+      if (data) {
+        setUsers(data.users);
+        setTotalPages(data.totalPages);
+      } else {
+        setError(data.message || 'Failed to fetch users.');
+      }
+    } catch (error) {
+      console.error('Error fetching users:', error);
+      setError('Failed to connect to the server.');
+    } finally {
+      setLoading(false);
+    }
+  }, [page, pageSize]);
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      setLoading(true);
-      setError('');
-      try {
-        const data = await userService.getUsers(page, pageSize, searchQuery, filterRole);
-        if (data) {
-          setUsers(data.users);
-          setTotalPages(data.totalPages);
-        } else {
-          setError(data.message || 'Failed to fetch users.');
-        }
-      } catch (error) {
-        console.error('Error fetching users:', error);
-        setError('Failed to connect to the server.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchUsers();
-  }, [page, pageSize, searchQuery, filterRole]);
+  }, [fetchUsers]);
 
   const handlePreviousPage = () => {
     if (page > 1) {
@@ -60,14 +65,9 @@ const UsersListPage = () => {
     setPage(pageNumber);
   };
 
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
-    setPage(1);
-  };
-
-  const handleFilterChange = (event) => {
-    setFilterRole(event.target.value);
-    setPage(1);
+  const handleSearch = () => {
+    setPage(1); // Reset to the first page on new search
+    fetchUsers();
   };
 
   if (loading) {
@@ -84,26 +84,35 @@ const UsersListPage = () => {
 
       <div className="filters-container">
         <div className="search-input">
-          <label htmlFor="search">Search by Name/Email:</label>
+          <label htmlFor="name">Search by Name:</label>
           <input
             type="text"
-            id="search"
-            value={searchQuery}
-            onChange={handleSearchChange}
+            id="searchName"
+            ref={searchNameRef}
+          />
+        </div>
+        <div className="search-input">
+          <label htmlFor="email">Search by Email:</label>
+          <input
+            type="text"
+            id="searchEmail"
+            ref={searchEmailRef}
           />
         </div>
         <div className="filter-role">
           <label htmlFor="filterRole">Filter by Role:</label>
           <select
             id="filterRole"
-            value={filterRole}
-            onChange={handleFilterChange}
+            ref={filterRoleRef}
           >
             <option value="">All Roles</option>
             <option value="admin">Admin</option>
             <option value="user">User</option>
           </select>
         </div>
+        <Button className="button" onClick={handleSearch}>
+          Search
+        </Button>
       </div>
 
       <table className="users-table">
@@ -126,7 +135,7 @@ const UsersListPage = () => {
               <td>
                 {user.profileImage && (
                   <img
-                    src={`http:localhost:3000/uploads/${user.profileImage.split('/').pop()}`}
+                    src={`http://localhost:3000/uploads/${user.profileImage.split('/').pop()}`}
                     alt={user.name || 'Profile'}
                     className="profile-image"
                   />

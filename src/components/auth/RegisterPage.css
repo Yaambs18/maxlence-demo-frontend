@@ -2,18 +2,23 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 30px;
+  background-color: #f8f9fa;
+  min-height: 100dvh;
 }
 
 .register-page h2 {
   margin-bottom: 20px;
+  color: #343a40;
 }
 
 .register-page form {
-  width: 400px;
-  padding: 20px;
-  border: 1px solid #ccc;
+  background-color: #fff;
+  padding: 30px;
   border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  max-width: 95%;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -27,6 +32,7 @@
 .register-page form label {
   margin-bottom: 5px;
   font-weight: bold;
+  color: #495057;
 }
 
 .register-page form input[type="text"],
@@ -34,13 +40,21 @@
 .register-page form input[type="password"],
 .register-page form input[type="file"] {
   padding: 10px;
-  border: 1px solid #ddd;
+  border: 1px solid #ced4da;
   border-radius: 4px;
   font-size: 1rem;
 }
 
+.register-page form input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
 .register-page p {
   margin-top: 20px;
+  color: #6c757d;
+  text-align: center;
 }
 
 .register-page p a {
@@ -53,67 +67,29 @@
 }
 
 .register-page .error {
-  color: red;
+  color: #dc3545;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.register-page .error-message {
+  color: #dc3545;
+  font-size: 0.9rem;
   margin-top: 5px;
 }
 
 .register-page .success {
-  color: green;
-  margin-top: 5px;
+  color: #28a745;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
 
-@media (max-width: 768px) {
-  .register-page form {
-    width: 90%;
-    margin: 0 auto;
-    padding: 15px;
-  }
-
-  .register-page form div {
-    margin-bottom: 10px;
-  }
-
-  .register-page form label {
-    font-size: 0.9rem;
-  }
-
-  .register-page form input[type="text"],
-  .register-page form input[type="email"],
-  .register-page form input[type="password"],
-  .register-page form input[type="file"] {
-    padding: 8px;
-    font-size: 0.9rem;
-  }
-
-  .register-page p {
-    font-size: 0.9rem;
-    text-align: center;
-  }
-}
-
-@media (max-width: 480px) {
-  .register-page h2 {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
+@media (max-width: 576px) {
+  .register-page {
+    padding: 20px;
   }
 
   .register-page form {
-    gap: 10px;
-  }
-
-  .register-page form label {
-    font-size: 0.85rem;
-  }
-
-  .register-page form input[type="text"],
-  .register-page form input[type="email"],
-  .register-page form input[type="password"],
-  .register-page form input[type="file"] {
-    padding: 6px;
-    font-size: 0.85rem;
-  }
-
-  .register-page p {
-    font-size: 0.8rem;
+    padding: 20px;
   }
 }

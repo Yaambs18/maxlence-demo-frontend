@@ -85,6 +85,12 @@
   text-decoration: underline;
 }
 
+.login-container .error-message {
+    color: #dc3545;
+    font-size: 0.9rem;
+    margin-top: 5px;
+  }
+
 @media (max-width: 768px) {
   .login-container {
     padding: 25px;

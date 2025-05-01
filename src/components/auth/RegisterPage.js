@@ -1,106 +1,111 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import Button from '../UI/Button';
 import authService from '../../services/authService';
 
 import './RegisterPage.css';
 
 const RegisterPage = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const {
+    handleSubmit,
+    register,
+    watch,
+    formState: { errors, isSubmitting },
+  } = useForm();
   const [profileImage, setProfileImage] = useState(null);
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
   const navigate = useNavigate();
-    
+
+  const password = watch('password'); // Watch password field for confirmation
 
   const handleImageChange = (event) => {
     setProfileImage(event.target.files[0]);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    if (password !== confirmPassword) {
-      setError('Passwords do not match.');
-      return;
-    }
-
-    setLoading(true);
+  const onSubmit = async (data) => {
     setError('');
     setSuccessMessage('');
 
     const formData = new FormData();
-    formData.append('name', name);
-    formData.append('email', email);
-    formData.append('password', password);
+    formData.append('name', data.name);
+    formData.append('email', data.email);
+    formData.append('password', data.password);
     if (profileImage) {
       formData.append('profileImage', profileImage);
     }
 
     try {
-
-      const data = await authService.register(formData);
-
-      if (data) {
-        setSuccessMessage(data.message || 'Registration successful. Please check your email.');
+      const responseData = await authService.register(formData);
+      if (responseData) {
+        setSuccessMessage(responseData.message || 'Registration successful. Please check your email.');
         setTimeout(() => navigate('/login'), 3000);
       }
-    } catch (error) {
-      console.error('Registration error:', error);
+    } catch (registrationError) {
+      console.error('Registration error:', registrationError);
       setError('Failed to connect to the server.');
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
-    <div className='register-page'>
+    <div className="register-page">
       <h2>Register</h2>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
-      <form onSubmit={handleSubmit}>
+      {error && <p className="error">{error}</p>}
+      {successMessage && <p className="success">{successMessage}</p>}
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <label htmlFor="name">Name:</label>
           <input
             type="text"
             id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
+            {...register('name', { required: 'Name is required' })}
           />
+          {errors.name && <p className="error-message">{errors.name.message}</p>}
         </div>
         <div>
           <label htmlFor="email">Email:</label>
           <input
             type="email"
             id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
+            {...register('email', {
+              required: 'Email is required',
+              pattern: {
+                value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                message: 'Invalid email format',
+              },
+            })}
           />
+          {errors.email && <p className="error-message">{errors.email.message}</p>}
         </div>
         <div>
           <label htmlFor="password">Password:</label>
           <input
             type="password"
             id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
+            {...register('password', {
+              required: 'Password is required',
+              minLength: {
+                value: 6,
+                message: 'Password must be at least 6 characters',
+              },
+            })}
           />
+          {errors.password && <p className="error-message">{errors.password.message}</p>}
         </div>
         <div>
           <label htmlFor="confirmPassword">Confirm Password:</label>
           <input
             type="password"
             id="confirmPassword"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            required
+            {...register('confirmPassword', {
+              required: 'Confirm password is required',
+              validate: (value) => value === password || 'Passwords do not match',
+            })}
           />
+          {errors.confirmPassword && (
+            <p className="error-message">{errors.confirmPassword.message}</p>
+          )}
         </div>
         <div>
           <label htmlFor="profileImage">Profile Image (Optional):</label>
@@ -111,8 +116,8 @@ const RegisterPage = () => {
             onChange={handleImageChange}
           />
         </div>
-        <Button className='button' type="submit" disabled={loading}>
-          {loading ? 'Registering...' : 'Register'}
+        <Button className="button" type="submit" disabled={isSubmitting}>
+          {isSubmitting ? 'Registering...' : 'Register'}
         </Button>
       </form>
       <p>

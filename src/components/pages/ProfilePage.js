@@ -72,7 +72,8 @@ const ProfilePage = () => {
     }
 
     try {
-      const updatedUser = await userService.updateProfile(formData);
+      const response = await userService.updateProfile(formData);
+      const updatedUser = response.user;
       if (updatedUser) {
         setUser(updatedUser);
         setIsEditing(false);
