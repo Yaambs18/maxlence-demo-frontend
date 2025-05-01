@@ -1,0 +1,194 @@
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.profile-container {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  max-width: 95%;
+  text-align: center;
+}
+
+.profile-page h2 {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.profile-page p {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  color: #555;
+}
+
+.profile-page img {
+  max-width: 150px;
+  border-radius: 50%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border: 5px solid #f0f0f0;
+}
+
+.profile-page .loading {
+  font-size: 1.1rem;
+  color: #777;
+}
+
+.profile-page .error {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.profile-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: left;
+  margin-top: 20px;
+}
+
+.profile-page form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-page form label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.profile-page form input[type="text"],
+.profile-page form input[type="email"],
+.profile-page form input[type="file"] {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.profile-page .profile-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.profile-actions button:first-child {
+  background-color: #28a745;
+}
+
+.profile-actions button:first-child:hover {
+  background-color: #1e7e34;
+}
+
+.profile-actions button:last-child {
+  background-color: #dc3545;
+}
+
+.profile-actions button:last-child:hover {
+  background-color: #c82333;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 25px;
+    width: 90%;
+  }
+
+  .profile-page h2 {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+  }
+
+  .profile-page p {
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+  }
+
+  .profile-page img {
+    max-width: 120px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  .profile-page .loading {
+    font-size: 1rem;
+  }
+
+  .profile-page .error {
+    font-size: 0.95rem;
+  }
+
+  .profile-page form {
+    margin-top: 15px;
+  }
+
+  .profile-page form label {
+    font-size: 0.9rem;
+  }
+
+  .profile-page form input[type="text"],
+  .profile-page form input[type="email"],
+  .profile-page form input[type="file"] {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .profile-actions {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .profile-actions button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .profile-container {
+    padding: 20px;
+  }
+
+  .profile-page h2 {
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+  }
+
+  .profile-page p {
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+  }
+
+  .profile-page img {
+    max-width: 100px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+
+  .profile-page .loading {
+    font-size: 0.95rem;
+  }
+
+  .profile-page .error {
+    font-size: 0.9rem;
+  }
+
+  .profile-page form label {
+    font-size: 0.85rem;
+  }
+
+  .profile-page form input[type="text"],
+  .profile-page form input[type="email"],
+  .profile-page form input[type="file"] {
+    padding: 6px;
+    font-size: 0.85rem;
+  }
+}

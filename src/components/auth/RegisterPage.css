@@ -1,0 +1,119 @@
+.register-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.register-page h2 {
+  margin-bottom: 20px;
+}
+
+.register-page form {
+  width: 400px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.register-page form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.register-page form label {
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.register-page form input[type="text"],
+.register-page form input[type="email"],
+.register-page form input[type="password"],
+.register-page form input[type="file"] {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.register-page p {
+  margin-top: 20px;
+}
+
+.register-page p a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.register-page p a:hover {
+  text-decoration: underline;
+}
+
+.register-page .error {
+  color: red;
+  margin-top: 5px;
+}
+
+.register-page .success {
+  color: green;
+  margin-top: 5px;
+}
+
+@media (max-width: 768px) {
+  .register-page form {
+    width: 90%;
+    margin: 0 auto;
+    padding: 15px;
+  }
+
+  .register-page form div {
+    margin-bottom: 10px;
+  }
+
+  .register-page form label {
+    font-size: 0.9rem;
+  }
+
+  .register-page form input[type="text"],
+  .register-page form input[type="email"],
+  .register-page form input[type="password"],
+  .register-page form input[type="file"] {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .register-page p {
+    font-size: 0.9rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-page h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+
+  .register-page form {
+    gap: 10px;
+  }
+
+  .register-page form label {
+    font-size: 0.85rem;
+  }
+
+  .register-page form input[type="text"],
+  .register-page form input[type="email"],
+  .register-page form input[type="password"],
+  .register-page form input[type="file"] {
+    padding: 6px;
+    font-size: 0.85rem;
+  }
+
+  .register-page p {
+    font-size: 0.8rem;
+  }
+}

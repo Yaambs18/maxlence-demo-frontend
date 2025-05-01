@@ -1,0 +1,149 @@
+.login-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f4f4f4;
+}
+
+.login-container {
+  background-color: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  max-width: 95%;
+}
+
+.login-page h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+}
+
+.login-page form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.login-page form div {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-page form label {
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #555;
+}
+
+.login-page form input[type="email"],
+.login-page form input[type="password"] {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  color: #333;
+}
+
+.login-page .error {
+  color: red;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.login-page .forgot-password {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.login-page .forgot-password a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.login-page .forgot-password a:hover {
+  text-decoration: underline;
+}
+
+.login-page .register-link {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.login-page .register-link a {
+  color: #28a745;
+  text-decoration: none;
+}
+
+.login-page .register-link a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    padding: 25px;
+    width: 90%;
+  }
+
+  .login-page h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+
+  .login-page form {
+    gap: 15px;
+  }
+
+  .login-page form label {
+    font-size: 0.95rem;
+  }
+
+  .login-page form input[type="email"],
+  .login-page form input[type="password"] {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+
+  .login-page .error,
+  .login-page .forgot-password,
+  .login-page .register-link {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    padding: 20px;
+  }
+
+  .login-page h2 {
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+  }
+
+  .login-page form {
+    gap: 12px;
+  }
+
+  .login-page form label {
+    font-size: 0.9rem;
+  }
+
+  .login-page form input[type="email"],
+  .login-page form input[type="password"] {
+    padding: 8px;
+    font-size: 0.9rem;
+  }
+
+  .login-page .error,
+  .login-page .forgot-password,
+  .login-page .register-link {
+    font-size: 0.85rem;
+  }
+}
