@@ -57,6 +57,21 @@ const userService = {
       throw error;
     }
   },
+  async deleteUser(userId) {
+    const token = localStorage.getItem("accessToken");
+    try {
+      const response = await fetch(`${API_BASE_URL}/${userId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      });
+      return await response.json();
+    } catch (error) {
+      console.error("Delete user error:", error);
+      throw error;
+    }
+    }
 };
 
 export default userService;

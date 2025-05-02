@@ -19,9 +19,8 @@ const UsersListPage = () => {
     setLoading(true);
     setError('');
     try {
-      console.log(searchNameRef.current.value, searchEmailRef.current.value, filterRoleRef.current.value);
       const data = await userService.getUsers(
-        page, pageSize, searchNameRef.current.value, searchEmailRef.current.value, filterRoleRef.current.value
+        page, pageSize, searchNameRef?.current?.value, searchEmailRef?.current?.value, filterRoleRef?.current?.value
       );
       if (data) {
         setUsers(data.users);
@@ -68,6 +67,28 @@ const UsersListPage = () => {
   const handleSearch = () => {
     setPage(1); // Reset to the first page on new search
     fetchUsers();
+  };
+
+  const handleDeleteUser = async (userId) => {
+    if (window.confirm('Are you sure you want to delete this user?')) {
+      setLoading(true);
+      setError('');
+      try {
+        const response = await userService.deleteUser(userId);
+        if (response && response.message) {
+          fetchUsers();
+        } else if (response && response.error) {
+          setError(response.error);
+        } else {
+          setError('Failed to delete user.');
+        }
+      } catch (error) {
+        console.error('Error deleting user:', error);
+        setError('Failed to connect to the server.');
+      } finally {
+        setLoading(false);
+      }
+    }
   };
 
   if (loading) {
@@ -123,6 +144,7 @@ const UsersListPage = () => {
             <th>Name</th>
             <th>Role</th>
             <th>Profile Image</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -140,6 +162,15 @@ const UsersListPage = () => {
                     className="profile-image"
                   />
                 )}
+              </td>
+              <td>
+                <Button
+                  className="delete-button"
+                  onClick={() => handleDeleteUser(user.id)}
+                  disabled={loading}
+                >
+                  {loading ? 'Deleting...' : 'Delete'}
+                </Button>
               </td>
             </tr>
           ))}

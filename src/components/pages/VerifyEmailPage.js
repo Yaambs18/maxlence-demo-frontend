@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import authService from '../../services/authService';
 
 import './VerifyEmail.css';
@@ -9,6 +9,7 @@ const VerifyEmailPage = () => {
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const verifyEmail = async () => {
@@ -19,6 +20,9 @@ const VerifyEmailPage = () => {
         const data = await authService.verifyEmail(token);
         if (data) {
           setMessage(data.message || 'Email verified successfully.');
+          setTimeout(() => {
+            navigate('/login');
+          }, 3000);
         }
       } catch (error) {
         console.error('Email verification error:', error);
@@ -30,14 +34,6 @@ const VerifyEmailPage = () => {
 
     verifyEmail();
   }, [token]);
-
-  if (loading) {
-    return <div>Verifying email...</div>;
-  }
-
-  if (error) {
-    return <p style={{ color: 'red' }}>{error}</p>;
-  }
 
   return (
     <div className="verify-email-page">
